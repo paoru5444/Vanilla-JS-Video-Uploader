@@ -1,0 +1,28 @@
+<html>
+  <input id="video" type="file" onchange="getInputValue()" />
+  
+  <input id="videoTexto" type="text" />
+
+  <script>
+    async function getInputValue() {
+      const inputVideo = document.getElementById('video')
+        
+        let based64File = await toBase64(inputVideo.files[0])
+        
+        function setAnotherInput(value) {
+            const videoTexto = document.getElementById('videoTexto')
+            videoTexto.value = value
+            console.log('another', videoTexto.value)
+        }
+
+        setAnotherInput(based64File)
+    }
+    
+    const toBase64 = file => new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  </script>
+</html>
